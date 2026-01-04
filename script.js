@@ -70,6 +70,19 @@ function showPage(index, direction) {
   }, 450); // match page exit duration
 }
 
+let startY = 0;
+
+document.addEventListener('touchstart', e => {
+  startY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchmove', e => {
+  const deltaY = e.touches[0].clientY - startY;
+  // If user tries to move vertically, prevent it
+  if (Math.abs(deltaY) > 0) {
+    e.preventDefault();
+  }
+}, { passive: false });
 
 
 
