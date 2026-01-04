@@ -71,23 +71,40 @@ let isDragging = false;
 let dragStartX = 0;
 let dragCurrentX = 0;
 
+// --- Mouse events (desktop) ---
 document.addEventListener('mousedown', e => {
   isDragging = true;
   dragStartX = e.clientX;
 });
-
 document.addEventListener('mousemove', e => {
   if (!isDragging) return;
   dragCurrentX = e.clientX;
 });
-
 document.addEventListener('mouseup', () => {
   if (!isDragging) return;
-
-  const delta = dragCurrentX - dragStartX;
-
-  if (delta > 60) showPage(currentPage - 1, 'right');
-  if (delta < -60) showPage(currentPage + 1, 'left');
-
+  handleSwipe();
   isDragging = false;
 });
+
+// --- Touch events (mobile) ---
+document.addEventListener('touchstart', e => {
+  isDragging = true;
+  dragStartX = e.touches[0].clientX;
+});
+document.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+  dragCurrentX = e.touches[0].clientX;
+});
+document.addEventListener('touchend', () => {
+  if (!isDragging) return;
+  handleSwipe();
+  isDragging = false;
+});
+
+// --- Common handler ---
+function handleSwipe() {
+  const delta = dragCurrentX - dragStartX;
+
+  if (delta > 60) showPage(currentPage - 1, 'right'); // swipe right
+  if (delta < -60) showPage(currentPage + 1, 'left'); // swipe left
+}
