@@ -2,20 +2,34 @@ const pages = document.querySelectorAll('.page');
 let currentPage = 0;
 let isAnimating = false;
 
-function resetReveals(page) {
-  page.querySelectorAll('.reveal').forEach(el => {
-    el.classList.remove('show');
-  });
-}
+const revealTimeouts = new Map(); // page -> array of timeouts
 
 function revealPage(page) {
   const items = page.querySelectorAll('.reveal');
   const delay = 250;
+  const timeouts = [];
 
   items.forEach((el, i) => {
-    setTimeout(() => {
+    const t = setTimeout(() => {
       el.classList.add('show');
     }, i * delay);
+    timeouts.push(t);
+  });
+
+  // store timeouts so we can cancel them
+  revealTimeouts.set(page, timeouts);
+}
+
+function resetReveals(page) {
+  // Cancel any pending reveal timeouts
+  if (revealTimeouts.has(page)) {
+    revealTimeouts.get(page).forEach(clearTimeout);
+    revealTimeouts.delete(page);
+  }
+
+  // reset all reveals
+  page.querySelectorAll('.reveal').forEach(el => {
+    el.classList.remove('show');
   });
 }
 
@@ -28,6 +42,12 @@ function showPage(index, direction) {
   const current = pages[currentPage];
   const next = pages[index];
 
+  // Cancel any pending reveals immediately so they don't animate mid-exit
+  if (revealTimeouts.has(current)) {
+    revealTimeouts.get(current).forEach(clearTimeout);
+    revealTimeouts.delete(current);
+  }
+
   // Animate current page out
   current.classList.add(direction === 'left' ? 'exit-left' : 'exit-right');
 
@@ -36,27 +56,21 @@ function showPage(index, direction) {
     // Hide current page completely
     current.classList.remove('active', 'exit-left', 'exit-right');
 
-    // Reset reveals *after page is gone*
+    // Now reset reveals AFTER the page is hidden
     current.querySelectorAll('.reveal').forEach(el => {
-      el.classList.remove('show'); // back to hidden + offset via CSS
+      el.classList.remove('show');
     });
 
     // Activate next page
     next.classList.add('active');
-
-    // Animate reveals one by one
-    const items = next.querySelectorAll('.reveal');
-    const baseDelay = 300;
-    items.forEach((el, i) => {
-      setTimeout(() => {
-        el.classList.add('show');
-      }, i * baseDelay);
-    });
+    revealPage(next); // animate reveals
 
     currentPage = index;
     isAnimating = false;
   }, 450); // match page exit duration
 }
+
+
 
 
 // Initial load
