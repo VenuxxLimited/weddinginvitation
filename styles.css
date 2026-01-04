@@ -43,6 +43,7 @@ html, body {
   position: relative;
   width: 100%;
   max-width: 500px; /* for mobile */
+  max-height: 100vh;
   aspect-ratio: 9 / 16; /* portrait ratio */
   margin: 0 auto;
   background: white;
