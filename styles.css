@@ -24,8 +24,11 @@ body {
 /* Portrait container */
 .viewport {
   position: relative;
-  width: min(100vw, 420px);
-  aspect-ratio: 9 / 16;
+  width: 100%;
+  max-width: 500px; /* for mobile */
+  aspect-ratio: 9 / 16; /* portrait ratio */
+  margin: 0 auto;
+  background: white;
   overflow: hidden;
 }
 
@@ -42,6 +45,17 @@ body {
   opacity: 1;
   pointer-events: auto;
 }
+
+.reveal img {
+  width: 100%;      /* fills parent width */
+  height: auto;     /* preserves aspect ratio */
+  display: block;   /* removes default inline spacing */
+  max-height: 100%; /* ensures image never exceeds container height */
+  object-fit: contain; /* optional: ensures full image is visible */
+  pointer-events: none;
+  user-select: none; /* prevents text/image selection on drag */
+}
+
 
 /* Modular reveal elements */
 .reveal {
