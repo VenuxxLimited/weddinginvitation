@@ -20,6 +20,12 @@ body {
 }
 
 
+.scale-root {
+  width: 500px;      /* design width */
+  height: 888px;     /* 9 / 16 ratio */
+  transform-origin: top center;
+}
+
 /* Desktop side padding */
 .app {
   width: 100%;

@@ -108,3 +108,19 @@ function handleSwipe() {
   if (delta > 60) showPage(currentPage - 1, 'right'); // swipe right
   if (delta < -60) showPage(currentPage + 1, 'left'); // swipe left
 }
+
+function scaleApp() {
+    const baseWidth = 500;
+    const baseHeight = 888; // 9 / 16
+
+    const scale = Math.min(
+      window.innerWidth / baseWidth,
+      window.innerHeight / baseHeight
+    );
+
+    document.querySelector('.scale-root').style.transform =
+      `scale(${scale})`;
+  }
+
+  window.addEventListener('resize', scaleApp);
+  scaleApp();
