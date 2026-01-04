@@ -10,7 +10,7 @@ function resetReveals(page) {
 
 function revealPage(page) {
   const items = page.querySelectorAll('.reveal');
-  const delay = 300;
+  const delay = 250;
 
   items.forEach((el, i) => {
     setTimeout(() => {

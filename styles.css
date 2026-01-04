@@ -85,7 +85,6 @@ body {
 
 /* Modular reveal elements */
 .reveal {
-  color: #372521;
   opacity: 0;
   transition:
     opacity 0.7s ease,
