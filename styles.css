@@ -13,11 +13,6 @@ body {
   align-items: center;
 }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
 @font-face {
   font-family: LeJour;
   src : url('assets/LeJourScript.woff') format('woff');
