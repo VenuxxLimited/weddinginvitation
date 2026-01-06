@@ -7,7 +7,7 @@
 
 <style>
     :root {
-        --click-size: 40%; /* 👈 customize clickable area size */
+        --click-size: 40%; /* 👈 change this to resize clickable area */
     }
 
     html, body {
@@ -16,19 +16,30 @@
         width: 100%;
         height: 100%;
         background: black;
-        overflow: hidden;
         user-select: none;
         -webkit-user-select: none;
         -webkit-touch-callout: none;
     }
 
+    /* Allow pull-to-refresh */
+    body {
+        overflow-y: auto;
+    }
+
+    /* Invisible scroll buffer for mobile refresh */
+    .scroll-buffer {
+        height: 1px;
+    }
+
+    /* Fixed fullscreen video layer */
     .video-container {
-        width: 100vw;
-        height: 100vh;
+        position: fixed;
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
+        background: black;
     }
 
     .video-wrapper {
@@ -48,10 +59,10 @@
         will-change: opacity, transform;
         transform: translateZ(0);
         image-rendering: auto;
-        pointer-events: none; /* prevents long-press + right click */
+        pointer-events: none; /* disables long-press / right-click */
     }
 
-    /* MOBILE */
+    /* MOBILE: width-based, crop vertically */
     @media (max-width: 768px) {
         video {
             width: 100vw;
@@ -60,7 +71,7 @@
         }
     }
 
-    /* DESKTOP */
+    /* DESKTOP: height-based */
     @media (min-width: 769px) {
         video {
             height: 100vh;
@@ -69,7 +80,7 @@
         }
     }
 
-    /* Top video initially hidden */
+    /* Video visibility */
     #video2 {
         opacity: 0;
     }
@@ -84,9 +95,10 @@
         transform: translate(-50%, -50%);
         z-index: 10;
         cursor: pointer;
+        touch-action: manipulation;
     }
 
-    /* Optional debug */
+    /* Debug helper (optional) */
     /*
     .click-zone {
         outline: 2px solid red;
@@ -96,10 +108,11 @@
 </head>
 
 <body>
+
 <div class="video-container">
     <div class="video-wrapper">
 
-        <!-- Video 1 (looping background) -->
+        <!-- Video 1 (looping) -->
         <video
             id="video1"
             muted
@@ -108,7 +121,7 @@
             playsinline
             disablepictureinpicture
         >
-            <source src="assets/wiggle.mp4" type="video/mp4">
+            <source src="video1.mp4" type="video/mp4">
         </video>
 
         <!-- Video 2 (plays once) -->
@@ -118,7 +131,7 @@
             playsinline
             disablepictureinpicture
         >
-            <source src="assets/envelope_open.mp4" type="video/mp4">
+            <source src="video2.mp4" type="video/mp4">
         </video>
 
         <!-- Click trigger -->
@@ -127,6 +140,9 @@
     </div>
 </div>
 
+<!-- Scroll buffer enables pull-to-refresh -->
+<div class="scroll-buffer"></div>
+
 <script>
     const video1 = document.getElementById("video1");
     const video2 = document.getElementById("video2");
@@ -134,14 +150,13 @@
 
     let triggered = false;
 
-    // Disable context menu everywhere
+    // Disable right-click everywhere
     document.addEventListener("contextmenu", e => e.preventDefault());
 
     clickZone.addEventListener("click", () => {
         if (triggered) return;
         triggered = true;
 
-        // Fade swap
         video1.style.opacity = "0";
         video2.style.opacity = "1";
 
@@ -149,12 +164,12 @@
         video2.play();
     });
 
-    // When second video ends, revert to first
     //video2.addEventListener("ended", () => {
         //video2.style.opacity = "0";
         //video1.style.opacity = "1";
         //triggered = false;
     //});
 </script>
+
 </body>
 </html>
