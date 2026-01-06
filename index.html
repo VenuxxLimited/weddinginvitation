@@ -19,6 +19,7 @@
         user-select: none;
         -webkit-user-select: none;
         -webkit-touch-callout: none;
+        background: #dcecd9;
     }
 
     /* Allow pull-to-refresh */
@@ -39,7 +40,7 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        background: black;
+        background: #dcecd9;
     }
 
     .video-wrapper {
@@ -60,6 +61,7 @@
         transform: translateZ(0);
         image-rendering: auto;
         pointer-events: none; /* disables long-press / right-click */
+        background: #dcecd9;
     }
 
     /* MOBILE: width-based, crop vertically */
@@ -73,6 +75,9 @@
 
     /* DESKTOP: height-based */
     @media (min-width: 769px) {
+        :root {
+            --video-half-width: calc((99vh * (540 / 1080)) / 2); /* half width of video */
+        }
         video {
             height: 100vh;
             width: auto;
@@ -98,6 +103,18 @@
         touch-action: manipulation;
     }
 
+    .right-edge-fix {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(calc(var(--video-half-width)));
+        width: 5px;                  /* a few pixels wide */
+        height: 100%;
+        background: #dcecd9;          /* match container background */
+        z-index: 1;
+        pointer-events: none;         /* allow clicks to pass through */
+    }  
+
     /* Debug helper (optional) */
     /*
     .click-zone {
@@ -121,7 +138,7 @@
             playsinline
             disablepictureinpicture
         >
-            <source src="video1.mp4" type="video/mp4">
+            <source src="assets/wiggle.mp4" type="video/mp4">
         </video>
 
         <!-- Video 2 (plays once) -->
@@ -131,11 +148,13 @@
             playsinline
             disablepictureinpicture
         >
-            <source src="video2.mp4" type="video/mp4">
+            <source src="assets/envelope_open.mp4" type="video/mp4">
         </video>
 
         <!-- Click trigger -->
         <div class="click-zone" id="clickZone"></div>
+
+        <div class="right-edge-fix"></div>
 
     </div>
 </div>
