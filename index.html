@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link href='https://fonts.googleapis.com/css?family=Cormorant Garamond' rel='stylesheet'>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Seamless Dual Video</title>
+<title>Dave and Jude</title>
 
 <style>
     :root {
@@ -154,6 +155,60 @@
         transform: translateY(0);
     }
 
+    #imageContainer {
+        margin: 0 auto;
+    }
+
+    /* This is the coordinate system */
+    .image-stage {
+        position: relative;
+        width: 100%;
+    }
+
+    /* The long image */
+    #longImage {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Anchored elements */
+    .anchor {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        font-family: 'Cormorant Garamond'; 
+    }
+
+    /* Example positions (relative to image) */
+    .anchor-1 {
+        left: 50%;   /* horizontally centered */
+        top: 25.5%;    /* 30% down the image */
+        text-align: center;
+        font-weight: bold;
+        color: #362724;
+        font-size: 22px;
+    }
+
+    .anchor-2 {
+        left: 50%;
+        top: 27%;
+        color: #362724;
+        font-size: 22px;
+    }
+
+    .anchor-3 {
+        left: 50%;
+        top: 45.5%;
+        text-align: center;
+        color: #362724;
+        font-size: 14px;
+    }
+
+    #demo {
+        font-size: 30px;
+    }
+
 
 
 </style>
@@ -189,17 +244,23 @@
         <!-- Click trigger -->
         <div class="click-zone" id="clickZone"></div>
 
-        <div class="right-edge-fix"></div>
+        <!-- <div class="right-edge-fix"></div> -->
 
     </div>
 </div>
 
 <div id="imageContainer">
-    <img
-        id="longImage"
-        src="assets/invitation.png"
-        alt=""
-    />
+    <div class="image-stage">
+        <img id="longImage" src="assets/invitation.png" alt="" />
+
+        <!-- Anchored elements -->
+        <div class="anchor anchor-1"><p id="demo"></p></div>
+        <div class="anchor anchor-2">Before the Wedding</div>
+        <div class="anchor anchor-3">
+            Click the link below for more location details <br>
+            <a href="https://maps.app.goo.gl/CSjBBKHW86zayQW47?g_st=afm" target="_blank" style="color:#d19596;">Venue Location on Google Maps</a>
+        </div>
+    </div>
 </div>
 
 <!-- Scroll buffer enables pull-to-refresh -->
@@ -249,6 +310,37 @@
 
     window.scrollTo(0, 0);
 });
+
+
+
+    // Set the date we're counting down to
+    var countDownDate = new Date("March 8, 2026 15:30:00").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+      // Get today's date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the result in the element with id="demo"
+      document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+      + minutes + "m " + seconds + "s ";
+
+      // If the count down is finished, write some text
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+      }
+    }, 1000);
 
 
 </script>
