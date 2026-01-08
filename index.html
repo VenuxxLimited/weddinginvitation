@@ -9,7 +9,7 @@
 
 <style>
     :root {
-        --click-size: 40%; /* 👈 change this to resize clickable area */
+        --click-size: 24%; /* 👈 change this to resize clickable area */
     }
 
     @font-face {
@@ -303,19 +303,31 @@
     // Disable right-click everywhere
     document.addEventListener("contextmenu", e => e.preventDefault());
 
-    clickZone.addEventListener("click", () => {
-        if (triggered) return;
-        triggered = true;
+    clickZone.addEventListener("click", async () => {
+    if (triggered) return;
+    triggered = true;
 
-        clickZone.style.display = "none";
+    clickZone.style.display = "none";
 
-        video1.style.opacity = "0";
-        video2.style.opacity = "1";
+    
 
-        video2.currentTime = 0;
-        video2.play();
+    // Wait until video2 has a frame
+    await new Promise(resolve => {
+        if (video2.readyState >= 2) {
+            resolve();
+        } else {
+            video2.addEventListener("loadeddata", resolve, { once: true });
+        }
     });
 
+    // Start loading video2 immediately
+    video2.currentTime = 0;
+    video2.play();
+
+    // NOW switch visibility
+    video1.style.opacity = "0";
+    video2.style.opacity = "1";
+});
     //video2.addEventListener("ended", () => {
         //video2.style.opacity = "0";
         //video1.style.opacity = "1";
