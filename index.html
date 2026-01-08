@@ -131,13 +131,29 @@
     #imageContainer {
     display: none;
     margin: 0 auto;
-}
+    }
 
-#longImage {
-    display: block;
-    width: 100%;
-    height: auto;
-}
+    #longImage {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    #imageContainer {
+        display: none;
+        opacity: 0;
+        transform: translateY(60px);
+        transition:
+            opacity 0.8s ease,
+            transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Visible / animated in */
+    #imageContainer.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 
 
 </style>
@@ -222,10 +238,17 @@
     const imageContainer = document.getElementById("imageContainer");
 
     video2.addEventListener("ended", () => {
-        videoContainer.style.display = "none";
-        imageContainer.style.display = "block";
-        window.scrollTo(0,0);
-    });
+    videoContainer.style.display = "none";
+
+    imageContainer.style.display = "block";
+
+    // Force reflow so the browser registers the initial state
+    imageContainer.offsetHeight;
+
+    imageContainer.classList.add("show");
+
+    window.scrollTo(0, 0);
+});
 
 
 </script>
