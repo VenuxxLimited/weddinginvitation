@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <link href='https://fonts.googleapis.com/css?family=Cormorant Garamond' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Libre Bodoni' rel='stylesheet'>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dave and Jude</title>
@@ -187,19 +188,19 @@
     }
 
     /* Example positions (relative to image) */
-    .anchor-1 {
-        left: 50%;   /* horizontally centered */
-        top: 26.5%;    /* 30% down the image */
+    .anchor-time {
+        /* left: 50%;   horizontally centered */
+        top: 25.8%;    /* 30% down the image */
         text-align: center;
-        font-weight: bold;
-        color: #362724;
-        font-size: 4cqw;
+        font-family: 'Libre Bodoni';
+        color: #dda0a6;
+        font-size: 7cqw;
     }
 
     .anchor-2 {
         left: 50%;
-        top: 25.2%;
-        color: #362724;
+        top: 24.5%;
+        color: #dda0a6;
         font-size: 3.3cqw;
         font-family: 'LeJour';
     }
@@ -214,6 +215,22 @@
 
     #demo {
         font-size: 6cqw;
+    }
+
+    .d {
+        left: 33%;
+    }
+
+    .h {
+        left: 44%;
+    }
+
+    .m {
+        left: 55.5%;
+    }
+
+    .s {
+        left: 67%;
     }
 
 
@@ -261,7 +278,10 @@
         <img id="longImage" src="assets/invitation.png" alt="" />
 
         <!-- Anchored elements -->
-        <div class="anchor anchor-1"><p id="demo"></p></div>
+        <div class="anchor anchor-time d"><p id="day"></p></div>
+        <div class="anchor anchor-time h"><p id="hrs"></p></div>
+        <div class="anchor anchor-time m"><p id="min"></p></div>
+        <div class="anchor anchor-time s"><p id="sec"></p></div>
         <div class="anchor anchor-2">Wedding Countdown</div>
         <div class="anchor anchor-3">
             Click the link below for more location details: <br>
@@ -339,8 +359,10 @@
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       // Display the result in the element with id="demo"
-      document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-      + minutes + "m " + seconds + "s ";
+      document.getElementById("day").innerHTML = days;
+      document.getElementById("hrs").innerHTML = hours;
+      document.getElementById("min").innerHTML = minutes;
+      document.getElementById("sec").innerHTML = seconds;
 
       // If the count down is finished, write some text
       if (distance < 0) {
