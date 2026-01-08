@@ -11,6 +11,11 @@
         --click-size: 40%; /* 👈 change this to resize clickable area */
     }
 
+    @font-face {
+        font-family: LeJour;
+        src : url('assets/LeJourScript.woff') format('woff');
+    }
+
     html, body {
         margin: 0;
         padding: 0;
@@ -163,6 +168,7 @@
     .image-stage {
         position: relative;
         width: 100%;
+        container-type: inline-size;
     }
 
     /* The long image */
@@ -183,18 +189,19 @@
     /* Example positions (relative to image) */
     .anchor-1 {
         left: 50%;   /* horizontally centered */
-        top: 25.5%;    /* 30% down the image */
+        top: 26.5%;    /* 30% down the image */
         text-align: center;
         font-weight: bold;
         color: #362724;
-        font-size: 22px;
+        font-size: 4cqw;
     }
 
     .anchor-2 {
         left: 50%;
-        top: 27%;
+        top: 25.2%;
         color: #362724;
-        font-size: 22px;
+        font-size: 3.3cqw;
+        font-family: 'LeJour';
     }
 
     .anchor-3 {
@@ -202,11 +209,11 @@
         top: 45.5%;
         text-align: center;
         color: #362724;
-        font-size: 14px;
+        font-size: 2.5cqw;
     }
 
     #demo {
-        font-size: 30px;
+        font-size: 6cqw;
     }
 
 
@@ -255,10 +262,10 @@
 
         <!-- Anchored elements -->
         <div class="anchor anchor-1"><p id="demo"></p></div>
-        <div class="anchor anchor-2">Before the Wedding</div>
+        <div class="anchor anchor-2">Wedding Countdown</div>
         <div class="anchor anchor-3">
-            Click the link below for more location details <br>
-            <a href="https://maps.app.goo.gl/CSjBBKHW86zayQW47?g_st=afm" target="_blank" style="color:#d19596;">Venue Location on Google Maps</a>
+            Click the link below for more location details: <br>
+            <a href="https://maps.app.goo.gl/CSjBBKHW86zayQW47?g_st=afm" target="_blank" style="color:#d19596; font-size: 3cqw;">Venue Location on Google Maps</a>
         </div>
     </div>
 </div>
