@@ -83,6 +83,9 @@
             width: auto;
             object-fit: contain;
         }
+        #imageContainer {
+            width: calc(100vh * (540 / 1080));
+        }
     }
 
     /* Video visibility */
@@ -124,6 +127,19 @@
         outline: 2px solid red;
     }
     */
+
+    #imageContainer {
+    display: none;
+    margin: 0 auto;
+}
+
+#longImage {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+
 </style>
 </head>
 
@@ -162,6 +178,14 @@
     </div>
 </div>
 
+<div id="imageContainer">
+    <img
+        id="longImage"
+        src="assets/invitation.png"
+        alt=""
+    />
+</div>
+
 <!-- Scroll buffer enables pull-to-refresh -->
 <div class="scroll-buffer"></div>
 
@@ -193,6 +217,17 @@
         //video1.style.opacity = "1";
         //triggered = false;
     //});
+
+    const videoContainer = document.querySelector(".video-container");
+    const imageContainer = document.getElementById("imageContainer");
+
+    video2.addEventListener("ended", () => {
+        videoContainer.style.display = "none";
+        imageContainer.style.display = "block";
+        window.scrollTo(0,0);
+    });
+
+
 </script>
 
 </body>
